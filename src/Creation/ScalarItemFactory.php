@@ -36,7 +36,14 @@ class ScalarItemFactory implements CItemFactory
         }
         elseif($type_name === 'bool')
         {
-            $value = (bool) $value;
+            if($value === 'false')
+            {
+                $value = false;
+            }
+            else
+            {
+                $value = (bool) $value;
+            }
         }
         elseif($type_name === 'float')
         {

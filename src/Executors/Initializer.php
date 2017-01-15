@@ -47,10 +47,9 @@ class Initializer implements CInitializer
             {
                 $value = 0;
             }
-
-            if(!is_int($value))
+            else
             {
-                throw new InitException('Scalar поле '.$own_name.' типа '.$own_type_name.' должно быть задано целым числом!');
+                $value = (int) $value;
             }
 
             $field = Int::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
@@ -61,10 +60,9 @@ class Initializer implements CInitializer
             {
                 $value = '';
             }
-
-            if(!is_string($value))
+            else
             {
-                throw new InitException('Scalar поле '.$own_name.' типа '.$own_type_name.' должно быть задано строкой!');
+                $value = (string) $value;
             }
 
             $field = String::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
@@ -75,10 +73,9 @@ class Initializer implements CInitializer
             {
                 $value = '';
             }
-
-            if(!is_string($value))
+            else
             {
-                throw new InitException('Scalar поле '.$own_name.' типа '.$own_type_name.' должно быть задано в текстовом виде!');
+                $value = (string) $value;
             }
 
             $field = Text::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
@@ -89,10 +86,9 @@ class Initializer implements CInitializer
             {
                 $value = 0;
             }
-
-            if(!is_float($value) and !is_int($value))
+            else
             {
-                throw new InitException('Scalar поле '.$own_name.' типа '.$own_type_name.' должно быть задано числом с пл. точкой!');
+                $value = (float) $value;
             }
 
             $field = Float::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
@@ -103,10 +99,9 @@ class Initializer implements CInitializer
             {
                 $value = false;
             }
-
-            if(!is_bool($value))
+            else
             {
-                throw new InitException('Scalar поле '.$own_name.' типа '.$own_type_name.' должно быть задано булевым значением!');
+                $value = (bool) $value;
             }
 
             $field = Bool::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
