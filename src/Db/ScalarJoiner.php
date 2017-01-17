@@ -19,6 +19,7 @@ class ScalarJoiner implements Joiner
     {
         $this->table_names  = [
             'int'    => 'ints',
+            'timestamp'    => 'timestamps',
             'string' => 'strings',
             'text'   => 'texts',
             'float'  => 'floats',

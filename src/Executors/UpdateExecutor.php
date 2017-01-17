@@ -11,6 +11,7 @@ use Interpro\Scalar\Model\Float;
 use Interpro\Scalar\Model\Int;
 use Interpro\Scalar\Model\String;
 use Interpro\Scalar\Model\Text;
+use Interpro\Scalar\Model\Timestamp;
 
 class UpdateExecutor implements CUpdateExecutor
 {
@@ -42,6 +43,12 @@ class UpdateExecutor implements CUpdateExecutor
             $value = (int) $value;
 
             $field = Int::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+        }
+        elseif($own_type_name === 'timestamp')
+        {
+            $value = strtotime(((string) $value));
+
+            $field = Timestamp::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'string')
         {

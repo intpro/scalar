@@ -40,7 +40,9 @@ class ScalarSecondServiceProvider extends ServiceProvider
         Log::info('Загрузка ScalarSecondServiceProvider');
 
         //Фабрике нужен медиатор мапперов и строитель item'ов простых типов, QS мапперу нужна фабрика
-        $factory = new ScalarItemFactory();
+        $offset = config('interpro.scalar.default_utc_offset', 0);
+
+        $factory = new ScalarItemFactory($offset);
         $mapper = new ScalarCMapper($factory, $tuner);
         $cItemBuilder->addFactory($factory);
 
@@ -74,6 +76,7 @@ class ScalarSecondServiceProvider extends ServiceProvider
         $config = [
             'bool' => 'Булев тип',
             'int' => 'Целочисленный тип',
+            'timestamp' => 'Метка времени',
             'float' => 'Вещественный тип',
             'string' => 'Строка',
             'text' => 'Текст'

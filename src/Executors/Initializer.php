@@ -11,6 +11,7 @@ use Interpro\Scalar\Model\Float;
 use Interpro\Scalar\Model\Int;
 use Interpro\Scalar\Model\String;
 use Interpro\Scalar\Model\Text;
+use Interpro\Scalar\Model\Timestamp;
 
 class Initializer implements CInitializer
 {
@@ -53,6 +54,19 @@ class Initializer implements CInitializer
             }
 
             $field = Int::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+        }
+        elseif($own_type_name === 'timestamp')
+        {
+            if($value === null)
+            {
+                $value = time();
+            }
+            else
+            {
+                $value = strtotime(((string) $value));
+            }
+
+            $field = Timestamp::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'string')
         {

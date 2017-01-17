@@ -12,6 +12,7 @@ use Interpro\Scalar\Model\Float;
 use Interpro\Scalar\Model\Int;
 use Interpro\Scalar\Model\String;
 use Interpro\Scalar\Model\Text;
+use Interpro\Scalar\Model\Timestamp;
 
 class Synchronizer implements OwnSynchronizerInterface
 {
@@ -46,6 +47,10 @@ class Synchronizer implements OwnSynchronizerInterface
         {
             $model = Int::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
+        elseif($field_type_name === 'timestamp')
+        {
+            $model = Timestamp::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+        }
         elseif($field_type_name === 'string')
         {
             $model = String::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
@@ -72,6 +77,10 @@ class Synchronizer implements OwnSynchronizerInterface
             if($field_type_name === 'int')
             {
                 Int::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => 0]);
+            }
+            elseif($field_type_name === 'timestamp')
+            {
+                Timestamp::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => time()]);
             }
             elseif($field_type_name === 'string')
             {

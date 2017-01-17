@@ -15,9 +15,8 @@ class ScalarFirstServiceProvider extends ServiceProvider
     {
         Log::info('Загрузка ScalarFirstServiceProvider');
 
-        $this->publishes([
-            __DIR__.'/migrations' => database_path('migrations')
-        ], 'migrations');
+        $this->publishes([__DIR__.'/migrations' => database_path('migrations')], 'migrations');
+        $this->publishes([__DIR__.'/config/scalar.php' => config_path('interpro/scalar.php')]);
     }
 
     /**
@@ -32,6 +31,7 @@ class ScalarFirstServiceProvider extends ServiceProvider
         $forecastList->registerCTypeName('string');
         $forecastList->registerCTypeName('text');
         $forecastList->registerCTypeName('int');
+        $forecastList->registerCTypeName('timestamp');
         $forecastList->registerCTypeName('float');
         $forecastList->registerCTypeName('bool');
     }

@@ -6,14 +6,17 @@ use Interpro\Core\Contracts\Taxonomy\Types\CType;
 use Interpro\Extractor\Contracts\Creation\CItemFactory;
 use Interpro\Extractor\Items\CItem;
 use Interpro\Scalar\Exception\ScalarException;
+use Interpro\Scalar\Items\TimestampItem;
 
 class ScalarItemFactory implements CItemFactory
 {
     private $cap_values;
+    private $offset;
 
-    public function __construct()
+    public function __construct($offset = 0)
     {
-        $this->cap_values = ['int'=>0, 'string'=>'пусто', 'bool'=>false, 'text'=>'пусто', 'float'=>0];
+        $this->offset = $offset;
+        $this->cap_values = ['int'=>0, 'timestamp'=>time(), 'string'=>'пусто', 'bool'=>false, 'text'=>'пусто', 'float'=>0];
     }
 
     /**
@@ -29,6 +32,10 @@ class ScalarItemFactory implements CItemFactory
         if($type_name === 'int')
         {
             $value = (int) $value;
+        }
+        elseif($type_name === 'timestamp')
+        {
+            $value = strtotime(((string) $value));
         }
         elseif($type_name === 'string')
         {
@@ -54,7 +61,14 @@ class ScalarItemFactory implements CItemFactory
             $value = (string) $value;
         }
 
-        $item = new CItem($type, $value, false);
+        if($type_name === 'timestamp')
+        {
+            $item = new TimestampItem($type, $value, $this->offset, false);
+        }
+        else
+        {
+            $item = new CItem($type, $value, false);
+        }
 
         return $item;
     }
@@ -75,7 +89,14 @@ class ScalarItemFactory implements CItemFactory
 
         $value = $this->cap_values[$type_name];
 
-        $item = new CItem($type, $value, true);
+        if($type_name === 'timestamp')
+        {
+            $item = new TimestampItem($type, $value, $this->offset, false);
+        }
+        else
+        {
+            $item = new CItem($type, $value, false);
+        }
 
         return $item;
     }

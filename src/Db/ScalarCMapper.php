@@ -22,7 +22,7 @@ class ScalarCMapper implements CMapper
     public function __construct(ScalarItemFactory $factory, Tuner $tuner)
     {
         $this->factory = $factory;
-        $this->tables = ['ints', 'strings', 'texts', 'floats', 'bools'];
+        $this->tables = ['ints', 'timestamps', 'strings', 'texts', 'floats', 'bools'];
         $this->tuner = $tuner;
     }
 
