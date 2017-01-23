@@ -22,7 +22,14 @@ class ScalarCMapper implements CMapper
     public function __construct(ScalarItemFactory $factory, Tuner $tuner)
     {
         $this->factory = $factory;
-        $this->tables = ['ints', 'timestamps', 'strings', 'texts', 'floats', 'bools'];
+        $this->tables = [
+            'int' => 'ints',
+            'timestamps' => 'timestamps',
+            'string' => 'strings',
+            'text' => 'texts',
+            'float' => 'floats',
+            'bool' => 'bools'
+        ];
         $this->tuner = $tuner;
     }
 
@@ -42,13 +49,13 @@ class ScalarCMapper implements CMapper
         $this->units = [];
     }
 
-    private function addResultToCollection(AType $ownerType, MapScalarCollection $collection, array $result)
+    private function addResultToCollection($type_name, AType $ownerType, MapScalarCollection $collection, array $result)
     {
         foreach($result as $item_array)
         {
             $field_name = $item_array['name'];
 
-            if($ownerType->fieldExist($field_name))
+            if($ownerType->fieldExist($field_name) and $ownerType->getFieldType($field_name)->getName() === $type_name)
             {
                 $fieldType = $ownerType->getFieldType($field_name);
 
@@ -92,7 +99,7 @@ class ScalarCMapper implements CMapper
         $collection = new MapScalarCollection($this->factory);
         $this->units[$key] = $collection;
 
-        foreach($this->tables as $table)
+        foreach($this->tables as $type_name => $table)
         {
             $query = DB::table($table);
             $query->where($table.'.entity_name', '=', $owner_name);
@@ -100,7 +107,7 @@ class ScalarCMapper implements CMapper
 
             $result = $query->get(['entity_name', 'entity_id', 'name', 'value']);
 
-            $this->addResultToCollection($ownerType, $collection, $result);
+            $this->addResultToCollection($type_name, $ownerType, $collection, $result);
         }
 
         return $collection;
@@ -126,7 +133,7 @@ class ScalarCMapper implements CMapper
         $collection = new MapScalarCollection($this->factory);
         $this->units[$key] = $collection;
 
-        foreach($this->tables as $table)
+        foreach($this->tables as $type_name => $table)
         {
             $query = DB::table($table);
             $query->where($table.'.entity_name', '=', $selectionUnit->getTypeName());
@@ -137,7 +144,7 @@ class ScalarCMapper implements CMapper
 
             $result = $query->get(['entity_name', 'entity_id', 'name', 'value']);
 
-            $this->addResultToCollection($ownerType, $collection, $result);
+            $this->addResultToCollection($type_name, $ownerType, $collection, $result);
         }
 
         return $collection;
