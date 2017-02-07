@@ -1,11 +1,11 @@
 {
     "name": "interpro/scalar",
     "description": "Простые типы универсальное быстроразворачиваемое хранилище.",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "require": {
-        "interpro/core": "1.0.*",
+        "interpro/core": "1.1.*",
         "interpro/extractor": "1.0.*",
-        "interpro/service": "0.1.*"
+        "interpro/service": "1.1.*"
     },
     "keywords": [
         "scalar"
