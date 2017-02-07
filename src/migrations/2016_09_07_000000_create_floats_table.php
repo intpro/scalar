@@ -19,7 +19,7 @@ class CreateFloatsTable extends Migration
             $table->string('entity_name');
             $table->integer('entity_id');
             $table->string('name');
-            $table->float('value');
+            $table->float('value', 12, 3);
         });
     }
 

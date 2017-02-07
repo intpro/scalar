@@ -4,12 +4,12 @@ namespace Interpro\Scalar;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Interpro\Core\Contracts\Mediator\DestructMediator;
 use Interpro\Core\Contracts\Mediator\InitMediator;
 use Interpro\Core\Contracts\Mediator\SyncMediator;
 use Interpro\Core\Contracts\Mediator\UpdateMediator;
+use Interpro\Core\Contracts\Taxonomy\Taxonomy;
 use Interpro\Extractor\Contracts\Creation\CItemBuilder;
 use Interpro\Extractor\Contracts\Db\JoinMediator;
 use Interpro\Extractor\Contracts\Db\MappersMediator;
@@ -21,6 +21,8 @@ use Interpro\Scalar\Executors\Destructor;
 use Interpro\Scalar\Executors\Initializer;
 use Interpro\Scalar\Executors\Synchronizer;
 use Interpro\Scalar\Executors\UpdateExecutor;
+use Interpro\Scalar\Service\DbCleaner;
+use Interpro\Service\Contracts\CleanMediator;
 
 class ScalarSecondServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,7 @@ class ScalarSecondServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot(Dispatcher $dispatcher,
+                         Taxonomy $taxonomy,
                          MappersMediator $mappersMediator,
                          JoinMediator $joinMediator,
                          CItemBuilder $cItemBuilder,
@@ -35,9 +38,10 @@ class ScalarSecondServiceProvider extends ServiceProvider
                          SyncMediator $syncMediator,
                          UpdateMediator $updateMediator,
                          DestructMediator $destructMediator,
-                         Tuner $tuner)
+                         Tuner $tuner,
+                         CleanMediator $cleanMediator)
     {
-        Log::info('Загрузка ScalarSecondServiceProvider');
+        //Log::info('Загрузка ScalarSecondServiceProvider');
 
         //Фабрике нужен медиатор мапперов и строитель item'ов простых типов, QS мапперу нужна фабрика
         $offset = config('interpro.scalar.default_utc_offset', 0);
@@ -64,6 +68,10 @@ class ScalarSecondServiceProvider extends ServiceProvider
 
         $destructor = new Destructor();
         $destructMediator->registerCDestructor($destructor);
+
+
+        $cleaner = new DbCleaner($taxonomy);
+        $cleanMediator->registerCleaner($cleaner);
     }
 
     /**
@@ -71,7 +79,7 @@ class ScalarSecondServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Log::info('Регистрация ScalarSecondServiceProvider');
+        //Log::info('Регистрация ScalarSecondServiceProvider');
 
         $config = [
             'bool' => 'Булев тип',
