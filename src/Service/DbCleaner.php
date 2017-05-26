@@ -4,12 +4,12 @@ namespace Interpro\Scalar\Service;
 
 use Interpro\Core\Contracts\Taxonomy\Taxonomy;
 use Interpro\Core\Taxonomy\Enum\TypeRank;
-use Interpro\Scalar\Model\Bool;
-use Interpro\Scalar\Model\Float;
-use Interpro\Scalar\Model\Int;
-use Interpro\Scalar\Model\String;
-use Interpro\Scalar\Model\Text;
-use Interpro\Scalar\Model\Timestamp;
+use Interpro\Scalar\Model\BoolModel;
+use Interpro\Scalar\Model\FloatModel;
+use Interpro\Scalar\Model\IntModel;
+use Interpro\Scalar\Model\StringModel;
+use Interpro\Scalar\Model\TextModel;
+use Interpro\Scalar\Model\TimestampModel;
 use Interpro\Service\Contracts\Cleaner as CleanerInterface;
 use Interpro\Service\Enum\Artefact;
 
@@ -34,12 +34,12 @@ class DbCleaner implements CleanerInterface
         $report = false;
 
         $tables = [
-            'string' => String::class,
-            'text' => Text::class,
-            'bool' => Bool::class,
-            'float' => Float::class,
-            'int' => Int::class,
-            'timestamp' => Timestamp::class];
+            'string' => StringModel::class,
+            'text' => TextModel::class,
+            'bool' => BoolModel::class,
+            'float' => FloatModel::class,
+            'int' => IntModel::class,
+            'timestamp' => TimestampModel::class];
 
         foreach($tables as $type_name => $modelClass)
         {

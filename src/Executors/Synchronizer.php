@@ -7,12 +7,12 @@ use Interpro\Core\Contracts\Ref\ARef;
 use Interpro\Core\Contracts\Executor\OwnSynchronizer as OwnSynchronizerInterface;
 use Interpro\Core\Contracts\Taxonomy\Fields\OwnField;
 use Interpro\Core\Exception\SyncException;
-use Interpro\Scalar\Model\Bool;
-use Interpro\Scalar\Model\Float;
-use Interpro\Scalar\Model\Int;
-use Interpro\Scalar\Model\String;
-use Interpro\Scalar\Model\Text;
-use Interpro\Scalar\Model\Timestamp;
+use Interpro\Scalar\Model\BoolModel;
+use Interpro\Scalar\Model\FloatModel;
+use Interpro\Scalar\Model\IntModel;
+use Interpro\Scalar\Model\StringModel;
+use Interpro\Scalar\Model\TextModel;
+use Interpro\Scalar\Model\TimestampModel;
 
 class Synchronizer implements OwnSynchronizerInterface
 {
@@ -45,27 +45,27 @@ class Synchronizer implements OwnSynchronizerInterface
 
         if($field_type_name === 'int')
         {
-            $model = Int::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+            $model = IntModel::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
         elseif($field_type_name === 'timestamp')
         {
-            $model = Timestamp::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+            $model = TimestampModel::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
         elseif($field_type_name === 'string')
         {
-            $model = String::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+            $model = StringModel::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
         elseif($field_type_name === 'text')
         {
-            $model = Text::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+            $model = TextModel::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
         elseif($field_type_name === 'float')
         {
-            $model = Float::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+            $model = FloatModel::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
         elseif($field_type_name === 'bool')
         {
-            $model = Bool::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
+            $model = BoolModel::where('entity_name', '=', $owner_type_name)->where('entity_id', '=', $id)->where('name', '=', $own_name)->first();
         }
         else
         {
@@ -76,27 +76,27 @@ class Synchronizer implements OwnSynchronizerInterface
         {
             if($field_type_name === 'int')
             {
-                Int::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => 0]);
+                IntModel::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => 0]);
             }
             elseif($field_type_name === 'timestamp')
             {
-                Timestamp::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => time()]);
+                TimestampModel::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => time()]);
             }
             elseif($field_type_name === 'string')
             {
-                String::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => '']);
+                StringModel::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => '']);
             }
             elseif($field_type_name === 'text')
             {
-                Text::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => '']);
+                TextModel::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => '']);
             }
             elseif($field_type_name === 'float')
             {
-                Float::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => 0]);
+                FloatModel::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => 0]);
             }
             elseif($field_type_name === 'bool')
             {
-                Bool::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => false]);
+                BoolModel::create(['entity_name' => $owner_type_name, 'entity_id' => $id, 'name' => $own_name, 'value' => false]);
             }
         }
     }

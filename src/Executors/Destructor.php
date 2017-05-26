@@ -4,11 +4,12 @@ namespace Interpro\Scalar\Executors;
 
 use Interpro\Core\Contracts\Executor\CDestructor;
 use Interpro\Core\Contracts\Ref\ARef;
-use Interpro\Scalar\Model\Bool;
-use Interpro\Scalar\Model\Float;
-use Interpro\Scalar\Model\Int;
-use Interpro\Scalar\Model\String;
-use Interpro\Scalar\Model\Text;
+use Interpro\Scalar\Model\BoolModel;
+use Interpro\Scalar\Model\FloatModel;
+use Interpro\Scalar\Model\IntModel;
+use Interpro\Scalar\Model\StringModel;
+use Interpro\Scalar\Model\TextModel;
+use Interpro\Scalar\Model\TimestampModel;
 
 class Destructor implements CDestructor
 {
@@ -31,10 +32,11 @@ class Destructor implements CDestructor
         $type_name = $type->getName();
         $id        = $ref->getId();
 
-        String::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
-        Int::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
-        Text::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
-        Float::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
-        Bool::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
+        StringModel::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
+        IntModel::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
+        TextModel::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
+        FloatModel::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
+        BoolModel::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
+        TimestampModel::where('entity_name', '=', $type_name)->where('entity_id', '=', $id)->delete();
     }
 }

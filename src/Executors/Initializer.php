@@ -6,12 +6,12 @@ use Interpro\Core\Contracts\Executor\CInitializer;
 use Interpro\Core\Contracts\Ref\ARef;
 use Interpro\Core\Contracts\Taxonomy\Fields\OwnField;
 use Interpro\Core\Exception\InitException;
-use Interpro\Scalar\Model\Bool;
-use Interpro\Scalar\Model\Float;
-use Interpro\Scalar\Model\Int;
-use Interpro\Scalar\Model\String;
-use Interpro\Scalar\Model\Text;
-use Interpro\Scalar\Model\Timestamp;
+use Interpro\Scalar\Model\BoolModel;
+use Interpro\Scalar\Model\FloatModel;
+use Interpro\Scalar\Model\IntModel;
+use Interpro\Scalar\Model\StringModel;
+use Interpro\Scalar\Model\TextModel;
+use Interpro\Scalar\Model\TimestampModel;
 
 class Initializer implements CInitializer
 {
@@ -53,7 +53,7 @@ class Initializer implements CInitializer
                 $value = (int) $value;
             }
 
-            $field = Int::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+            $field = IntModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'timestamp')
         {
@@ -66,7 +66,7 @@ class Initializer implements CInitializer
                 $value = strtotime(((string) $value));
             }
 
-            $field = Timestamp::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+            $field = TimestampModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'string')
         {
@@ -79,7 +79,7 @@ class Initializer implements CInitializer
                 $value = (string) $value;
             }
 
-            $field = String::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+            $field = StringModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'text')
         {
@@ -92,7 +92,7 @@ class Initializer implements CInitializer
                 $value = (string) $value;
             }
 
-            $field = Text::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+            $field = TextModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'float')
         {
@@ -105,7 +105,7 @@ class Initializer implements CInitializer
                 $value = (float) $value;
             }
 
-            $field = Float::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+            $field = FloatModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         elseif($own_type_name === 'bool')
         {
@@ -118,7 +118,7 @@ class Initializer implements CInitializer
                 $value = (bool) $value;
             }
 
-            $field = Bool::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
+            $field = BoolModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
         else
         {
