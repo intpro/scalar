@@ -5,6 +5,7 @@ namespace Interpro\Scalar\Db;
 use Illuminate\Support\Facades\DB;
 use Interpro\Core\Contracts\Ref\ARef;
 use Interpro\Core\Contracts\Taxonomy\Types\AType;
+use Interpro\Core\Helpers;
 use Interpro\Core\Taxonomy\Enum\TypeRank;
 use Interpro\Extractor\Contracts\Db\CMapper;
 use Interpro\Extractor\Contracts\Selection\SelectionUnit;
@@ -105,7 +106,7 @@ class ScalarCMapper implements CMapper
             $query->where($table.'.entity_name', '=', $owner_name);
             $query->where($table.'.entity_id', '=', $owner_id);
 
-            $result = $query->get(['entity_name', 'entity_id', 'name', 'value']);
+            $result = Helpers::laravel_db_result_to_array($query->get(['entity_name', 'entity_id', 'name', 'value']));
 
             $this->addResultToCollection($type_name, $ownerType, $collection, $result);
         }
@@ -142,7 +143,7 @@ class ScalarCMapper implements CMapper
                 $query->whereIn($table.'.entity_id', $selectionUnit->getIdSet());
             }
 
-            $result = $query->get(['entity_name', 'entity_id', 'name', 'value']);
+            $result = Helpers::laravel_db_result_to_array($query->get(['entity_name', 'entity_id', 'name', 'value']));
 
             $this->addResultToCollection($type_name, $ownerType, $collection, $result);
         }

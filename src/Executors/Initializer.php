@@ -2,6 +2,7 @@
 
 namespace Interpro\Scalar\Executors;
 
+use Carbon\Carbon;
 use Interpro\Core\Contracts\Executor\CInitializer;
 use Interpro\Core\Contracts\Ref\ARef;
 use Interpro\Core\Contracts\Taxonomy\Fields\OwnField;
@@ -65,6 +66,8 @@ class Initializer implements CInitializer
             {
                 $value = strtotime(((string) $value));
             }
+
+            $value = Carbon::createFromTimestamp($value);
 
             $field = TimestampModel::firstOrNew(['entity_name' => $type_name, 'entity_id' => $id, 'name' => $own_name]);
         }
